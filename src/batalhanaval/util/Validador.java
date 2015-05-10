@@ -23,7 +23,7 @@ public class Validador {
 	}
 	public boolean validar_entrada(String[] entrada){
 		try{
-			if(entrada.length()==2){
+			if(entrada.length==2){
 				int x=Integer.parseInt(entrada[0]);
 				int y=Integer.parseInt(entrada[1]);
 				return true;

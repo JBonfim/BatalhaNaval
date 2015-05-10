@@ -22,7 +22,7 @@ public class Persistence {
 	
 	@SuppressWarnings("resource")
 	public Map<String, int[]> readerEmbarcaJogador(String jogador) throws PersistenciaException{
-		File arquivoEmbarcacao = new File("arquivos/"+jogador);
+		File arquivoEmbarcacao = new File("Arquivos/"+jogador);
 		Map<String, int[]> dadosembarcacoes = new HashMap<String, int[]>();
 		FileInputStream stream = null;
 		String msgErro = "";

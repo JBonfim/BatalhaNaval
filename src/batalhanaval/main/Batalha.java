@@ -4,6 +4,7 @@ import java.util.Map;
 
 import batalhanaval.io.PersistenciaException;
 import batalhanaval.model.Embarcacao;
+import batalhanaval.ui.BatalhaNavalUI;
 import batalhanaval.util.TipoEmbarcacao;
 import batalhanaval.util.Validador;
 
@@ -12,6 +13,7 @@ import batalhanaval.util.Validador;
 public class Batalha {
 	
 	private BatalhaNavalFacade facade;
+	private BatalhaNavalUI ui;
 	private Validador validador;
 	private String JOGADOR1;
 	private String JOGADOR2;
@@ -20,39 +22,40 @@ public class Batalha {
 	public Batalha() {
 		this.facade = new BatalhaNavalFacade();
 		this.validador = new Validador();
+		ui = new BatalhaNavalUI();
 	}
 	
 	public void iniciarJogo(){
-		facade.exibir_MSG_na_tela("\nIniciando as Jogadas ");
+		ui.exibir_mensagem("\nIniciando as Jogadas ");
 		boolean vez_j1 = true;
 		boolean vez_j2 = false;
 		boolean start_jogo = true;
 		while(start_jogo){
 			if(vez_j1){
-				facade.exibir_MSG_na_tela("J1>");
-				String[] entrada = facade.entrada_de_dados().split(" ");
+				ui.exibir_mensagem("J1>");
+				String[] entrada = ui.entrada_de_dados().split(" ");
 				if(validador.validar_entrada(entrada)){
 					int x=Integer.parseInt(entrada[0]);
 					int y=Integer.parseInt(entrada[1]);
 					String tiro =facade.atirar(JOGADOR2, x, y);
 					if(tiro.equals("AGUA")){
-						facade.exibir_MSG_na_tela(tiro);
+						ui.exibir_mensagem(tiro);
 						vez_j2=true;
 						vez_j1=false;
 						
 					}
 					else{
 						if(facade.quantidade_de_vida(JOGADOR2)==0){
-							facade.exibir_MSG_na_tela(tiro);
-							facade.exibir_MSG_na_tela("FIM DE JOGO");
-							facade.exibir_MSG_na_tela("VENCEDOR: "+JOGADOR1);
+							ui.exibir_mensagem(tiro);
+							ui.exibir_mensagem("FIM DE JOGO");
+							ui.exibir_mensagem("VENCEDOR: "+JOGADOR1);
 							start_jogo=false;
 						}else{
-							facade.exibir_MSG_na_tela(tiro);
+							ui.exibir_mensagem(tiro);
 						}
 					}
 				}else{
-					facade.exibir_MSG_na_tela("JOGADA INVALIDA");
+					ui.exibir_mensagem("JOGADA INVALIDA");
 					vez_j2=false;
 					vez_j1=true;
 					
@@ -60,32 +63,32 @@ public class Batalha {
 				
 				
 			}else if(vez_j2){
-				facade.exibir_MSG_na_tela("J2>");
-				String[] entrada = facade.entrada_de_dados().split(" ");
+				ui.exibir_mensagem("J2>");
+				String[] entrada = ui.entrada_de_dados().split(" ");
 				if(validador.validar_entrada(entrada)){
 					int x=Integer.parseInt(entrada[0]);
 					int y=Integer.parseInt(entrada[1]);
 					String tiro =facade.atirar(JOGADOR1, x, y);
 					if(tiro.equals("AGUA")){
-						facade.exibir_MSG_na_tela(tiro);
+						ui.exibir_mensagem(tiro);
 						vez_j1=true;
 						vez_j2=false;
 						
 					}
 					else{
 						if(facade.quantidade_de_vida(JOGADOR1)==0){
-							facade.exibir_MSG_na_tela(tiro);
-							facade.exibir_MSG_na_tela("FIM DE JOGO");
-							facade.exibir_MSG_na_tela("VENCEDOR: "+JOGADOR2);
+							ui.exibir_mensagem(tiro);
+							ui.exibir_mensagem("FIM DE JOGO");
+							ui.exibir_mensagem("VENCEDOR: "+JOGADOR2);
 							start_jogo=false;
 						}else{
-							facade.exibir_MSG_na_tela(tiro);
+							ui.exibir_mensagem(tiro);
 						}
 						
 					}
 					
 				}else{
-					facade.exibir_MSG_na_tela("JOGADA INVALIDA");
+					ui.exibir_mensagem("JOGADA INVALIDA");
 					vez_j2=true;
 					vez_j1=false;
 					
@@ -106,12 +109,12 @@ public class Batalha {
 	public boolean carregar_dados_jogador(String aquivojogador1,String aquivojogador2){
 		try {
 			if(adicionar_embarcacao_jogador(aquivojogador1,JOGADOR1)&&adicionar_embarcacao_jogador(aquivojogador2,JOGADOR2)){
-				facade.exibir_MSG_na_tela("TABULEIROS CARREGADOS COM SUCESSO \n");
+				ui.exibir_mensagem("TABULEIROS CARREGADOS COM SUCESSO \n");
 				return true;
 			}
 		} catch (PersistenciaException e) {
 			// TODO Auto-generated catch block
-			facade.exibir_MSG_na_tela(e.getMessage());
+			ui.exibir_mensagem(e.getMessage());
 			return false;
 		}
 		return false;
