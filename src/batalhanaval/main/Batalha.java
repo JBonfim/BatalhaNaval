@@ -12,6 +12,8 @@ import batalhanaval.util.Validador;
 
 public class Batalha {
 	
+	//Para iniciar o Jogo pelo prompt de comando basta digitar: java batalhanaval.main.Batalha j1.txt j2.txt
+	
 	private BatalhaNavalFacade facade;
 	private BatalhaNavalUI ui;
 	private Validador validador;
@@ -153,7 +155,8 @@ public class Batalha {
 			bt.carregar_dados(args[0],args[1]);
 		}
 		else{
-			
+			new BatalhaNavalUI().exibir_mensagem("Erro ao Iniciar o Jogo \n "
+					+ "Verifique as Possiveis causas e corrija: \n 1- É necessario ter dois Jogadores \n 2- Para iniciar o Jogo pelo prompt de comando basta digitar: java batalhanaval.main.Batalha j1.txt j2.txt");
 		}
 		
 		
